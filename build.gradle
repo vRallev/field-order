@@ -1,0 +1,50 @@
+buildscript {
+  ext.kotlinVersion = '1.4.30-M1'
+
+  repositories {
+    jcenter()
+    maven {
+      url "https://dl.bintray.com/kotlin/kotlin-eap"
+    }
+    maven {
+      url "http://dl.bintray.com/kotlin/kotlin-dev"
+    }
+  }
+
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+  }
+}
+
+repositories {
+  jcenter()
+  maven {
+    url "https://dl.bintray.com/kotlin/kotlin-eap"
+  }
+  maven {
+    url "http://dl.bintray.com/kotlin/kotlin-dev"
+  }
+}
+
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jetbrains.kotlin.kapt'
+
+dependencies {
+  api "com.google.dagger:dagger:2.30.1"
+  kapt "com.google.dagger:dagger-compiler:2.30.1"
+}
+
+println "Versions: " + [
+    "Kotlin": ext.kotlinVersion
+]
+
+tasks.withType(JavaCompile).configureEach {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_1_8
+  }
+}
